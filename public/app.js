@@ -310,8 +310,8 @@ function updateHero() {
     const customBest = calcCustomAmount(best.rate);
     bestAmountEl.textContent = customBest != null ? `${formatNumber(customBest)} THB` : "-";
   } else {
-    bestRateEl.textContent = "-";
-    bestAmountEl.textContent = "-";
+    bestRateEl.textContent = "取得中";
+    bestAmountEl.textContent = "取得中";
   }
 }
 
