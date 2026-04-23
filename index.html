@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Thaniya Rate App</title>
+  <style>
+    :root{
+      --bg:#031225;
+      --panel:#07192f;
+      --text:#eef3ff;
+      --muted:#97a8c7;
+      --blue1:#6875ff;
+      --blue2:#4d5ae2;
+      --green:#43f06d;
+      --gold:#efb236;
+      --purple:#aa72ff;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(980px 580px at 50% -10%, rgba(46,91,186,.14), transparent 58%),
+        linear-gradient(180deg,#02101d 0%, #031225 100%);
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    .screen{
+      width:100%;
+      max-width:430px;
+      margin:0 auto;
+      min-height:100vh;
+      padding:10px 8px 0;
+    }
+
+    .phone{
+      width: 414px;
+      margin:0 auto;
+    }
+
+    .status{
+      height:44px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 8px 0 10px;
+      color:#fff;
+      font-size:18px;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+
+    .status-right{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .sig{
+      display:flex;
+      align-items:flex-end;
+      gap:2px;
+      height:14px;
+    }
+    .sig i{
+      display:block;
+      width:3px;
+      background:#fff;
+      border-radius:2px;
+    }
+    .sig i:nth-child(1){height:5px;opacity:.65}
+    .sig i:nth-child(2){height:8px;opacity:.78}
+    .sig i:nth-child(3){height:11px;opacity:.88}
+    .sig i:nth-child(4){height:14px}
+
+    .wifi{width:15px;height:11px;position:relative}
+    .wifi:before,.wifi:after{
+      content:"";
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      border:2px solid transparent;
+      border-top-color:#fff;
+      border-radius:50%;
+    }
+    .wifi:before{width:16px;height:16px;top:-6px}
+    .wifi:after{width:8px;height:8px;top:-2px}
+
+    .battery{
+      width:28px;
+      height:14px;
+      border:2px solid #fff;
+      border-radius:4px;
+      position:relative;
+    }
+    .battery:before{
+      content:"";
+      position:absolute;
+      right:-4px;
+      top:3px;
+      width:2px;
+      height:6px;
+      background:#fff;
+      border-radius:1px;
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(8,26,49,.98), rgba(5,19,36,.98));
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:16px;
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.015),
+        0 10px 28px rgba(0,0,0,.18);
+    }
+
+    .best{
+      margin-top:8px;
+      min-height:122px;
+      padding:13px 14px 11px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .best-title{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      font-size:12px;
+      font-weight:700;
+      color:#f3f6ff;
+      margin-bottom:9px;
+    }
+
+    .best-main{
+      display:grid;
+      grid-template-columns:1fr 104px;
+      gap:10px;
+      align-items:start;
+    }
+
+    .best-rate-row{
+      display:flex;
+      align-items:flex-end;
+      gap:8px;
+      white-space:nowrap;
+    }
+
+    .best-rate{
+      font-size:40px;
+      line-height:.9;
+      letter-spacing:-1.8px;
+      font-weight:800;
+      color:#e8eefb;
+    }
+
+    .best-unit{
+      font-size:12px;
+      line-height:1;
+      font-weight:700;
+      color:#bcc8de;
+      padding-bottom:6px;
+    }
+
+    .best-time{
+      border-left:1px solid rgba(255,255,255,.12);
+      padding-left:14px;
+      margin-top:2px;
+      min-height:38px;
+    }
+
+    .best-time .label{
+      font-size:10px;
+      color:#93a6c7;
+      font-weight:700;
+      margin-bottom:4px;
+    }
+
+    .best-time .value{
+      font-size:14px;
+      line-height:1.05;
+      font-weight:800;
+      color:#f0f4ff;
+      white-space:nowrap;
+    }
+
+    .best-sub{
+      margin-top:11px;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      padding-right:124px;
+    }
+
+    .best-sub .r1{
+      font-size:14px;
+      line-height:1.04;
+      font-weight:700;
+      color:#eff4ff;
+    }
+
+    .best-sub .yen{color:var(--purple)}
+
+    .best-sub .r2{
+      font-size:12px;
+      line-height:1.04;
+      font-weight:800;
+      color:var(--green);
+    }
+
+    .refresh{
+      position:absolute;
+      right:14px;
+      bottom:11px;
+      width:104px;
+      height:36px;
+      border:none;
+      border-radius:14px;
+      background:linear-gradient(180deg, rgba(24,42,72,.96), rgba(17,32,58,.96));
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+      color:#fff;
+      font-size:12px;
+      font-weight:800;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+
+    .refresh .ico{
+      width:15px;
+      height:15px;
+      border:2px solid #fff;
+      border-right-color:transparent;
+      border-radius:50%;
+      position:relative;
+      opacity:.96;
+    }
+    .refresh .ico:after{
+      content:"";
+      position:absolute;
+      right:-2px;
+      top:-2px;
+      width:5px;
+      height:5px;
+      border-top:2px solid #fff;
+      border-right:2px solid #fff;
+      transform:rotate(8deg);
+    }
+
+    .controls{
+      margin-top:10px;
+      padding:13px 14px 11px;
+    }
+
+    .control-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      align-items:start;
+    }
+
+    .label{
+      font-size:11px;
+      color:#9cadce;
+      font-weight:700;
+      margin:0 0 8px 4px;
+    }
+
+    .input-box{
+      height:50px;
+      border-radius:13px;
+      border:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(180deg, rgba(12,28,51,.98), rgba(8,21,39,.98));
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 18px;
+    }
+
+    .input-box input{
+      width:100%;
+      background:transparent;
+      border:none;
+      outline:none;
+      color:#f2f6ff;
+      font-size:21px;
+      font-weight:800;
+      letter-spacing:-.5px;
+    }
+
+    .suffix{
+      font-size:17px;
+      font-weight:800;
+      color:#d4def1;
+      margin-left:8px;
+      flex:0 0 auto;
+    }
+
+    .loc-btn{
+      height:50px;
+      width:100%;
+      border:none;
+      border-radius:13px;
+      background:linear-gradient(180deg, var(--blue1), var(--blue2));
+      color:#fff;
+      font-size:14px;
+      font-weight:800;
+      box-shadow:0 12px 24px rgba(84,101,255,.2);
+    }
+
+    .loc-row{
+      display:flex;
+      justify-content:flex-end;
+      align-items:center;
+      gap:8px;
+      margin-top:8px;
+      color:var(--green);
+      font-size:11px;
+      font-weight:800;
+      padding-right:2px;
+    }
+
+    .check{
+      width:16px;
+      height:16px;
+      border:2px solid var(--green);
+      border-radius:50%;
+      position:relative;
+      flex:0 0 auto;
+    }
+    .check:after{
+      content:"";
+      position:absolute;
+      left:3px;
+      top:0px;
+      width:4px;
+      height:8px;
+      border-right:2px solid var(--green);
+      border-bottom:2px solid var(--green);
+      transform:rotate(45deg);
+    }
+
+    .tabs{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:8px;
+    }
+
+    .tab{
+      height:43px;
+      border:none;
+      border-radius:999px;
+      background:linear-gradient(180deg, rgba(20,36,62,.98), rgba(12,26,47,.98));
+      color:#fff;
+      font-size:14px;
+      font-weight:800;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+    }
+
+    .tab.active{
+      background:linear-gradient(180deg, #6674ff 0%, #4b58e2 100%);
+    }
+
+    .count{
+      margin:12px 4px 10px;
+      color:#9fb1d4;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .shop{
+      border-radius:16px;
+      background:linear-gradient(180deg, rgba(9,25,46,.985), rgba(7,20,37,.985));
+      border:1px solid rgba(109,132,177,.28);
+      overflow:hidden;
+      margin-bottom:12px;
+      box-shadow:0 8px 24px rgba(0,0,0,.22);
+    }
+
+    .shop.featured{
+      border:2px solid rgba(233,172,46,.98);
+    }
+
+    .shop-head{
+      display:grid;
+      grid-template-columns:112px minmax(0,1fr) 120px;
+      grid-template-areas:
+        "left main rate"
+        "left badges rate";
+      column-gap:12px;
+      row-gap:8px;
+      align-items:start;
+      padding:10px 12px 10px;
+      min-height:106px;
+    }
+
+    .left-rail{
+      grid-column:1;
+      grid-row:1 / span 2;
+      width:112px;
+      min-height:60px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .rail-divider{
+      width:1px;
+      height:72px;
+      background:rgba(255,255,255,.18);
+      flex:0 0 auto;
+      box-shadow:0 0 0 1px rgba(255,255,255,.02);
+    }
+
+    .medal{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      border:3px solid #f0b63f;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:19px;
+      line-height:1;
+      font-weight:900;
+      color:#fff;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.6), rgba(255,255,255,.08) 35%, rgba(0,0,0,.2) 70%),
+        linear-gradient(180deg,#5a3a00,#0f223c);
+      box-shadow:
+        0 0 18px rgba(255,190,60,.42),
+        inset 0 0 12px rgba(255,255,255,.25);
+      flex:0 0 auto;
+    }
+
+    .medal.silver{
+      border-color:#ced8e7;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.58), rgba(255,255,255,.1) 35%, rgba(0,0,0,.18) 70%),
+        linear-gradient(180deg,#6a7388,#15253d);
+      box-shadow:
+        0 0 16px rgba(226,235,255,.22),
+        inset 0 0 12px rgba(255,255,255,.22);
+    }
+
+    .logo-box{
+      width:48px;
+      height:48px;
+      border-radius:13px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:21px;
+      font-weight:900;
+      color:#fff;
+      letter-spacing:-.6px;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+      flex:0 0 auto;
+    }
+
+    .logo-ts{ background:linear-gradient(180deg,#9032ff,#5a16c8); }
+    .logo-sg{ background:linear-gradient(180deg,#5fb63c,#338c19); }
+
+    .shop-main{
+      grid-area:main;
+      min-width:0;
+      padding-top:2px;
+    }
+
+    .title{
+      font-size:14px;
+      font-weight:800;
+      line-height:1.03;
+      color:#f2f6ff;
+      white-space:nowrap;
+      overflow:hidden;
+      
+    }
+
+    .area{
+      margin-top:3px;
+      font-size:11px;
+      font-weight:700;
+      color:#b1bfd9;
+      white-space:nowrap;
+      overflow:hidden;
+      
+    }
+
+    .badges{
+      grid-area:badges;
+      display:flex;
+      flex-wrap:nowrap;
+      gap:8px;
+      align-items:center;
+      min-width:0;
+      width:100%;
+      overflow:visible;
+      white-space:nowrap;
+    }
+    .badges::-webkit-scrollbar{ display:none; }
+
+    .badge{
+      height:22px;
+      border-radius:999px;
+      padding:0 10px;
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      background:linear-gradient(180deg, rgba(40,56,84,.96), rgba(28,42,67,.96));
+      border:1px solid rgba(255,255,255,.06);
+      color:#edf2ff;
+      font-size:10px;
+      font-weight:800;
+      white-space:nowrap;
+      flex:0 0 auto;
+      overflow:visible;
+      
+    }
+
+    .dot{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:#66ff73;
+      box-shadow:0 0 10px rgba(102,255,115,.35);
+    }
+
+    .rate-side{
+      grid-area:rate;
+      width:120px;
+      text-align:right;
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      justify-content:flex-start;
+      padding-top:2px;
+    }
+
+    .top-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:120px;
+      height:28px;
+      padding:0 8px;
+      border-radius:999px;
+      color:#4eff7a;
+      border:1px solid rgba(78,255,122,.8);
+      background:rgba(10,40,25,.6);
+      box-shadow:0 0 10px rgba(78,255,122,.35);
+      font-size:10px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .rate-side .num{
+      font-size:17px;
+      font-weight:900;
+      letter-spacing:-.6px;
+      line-height:.95;
+      color:#f2f6ff;
+      margin-top:14px;
+    }
+
+    .rate-side .unit{
+      margin-top:2px;
+      font-size:10px;
+      font-weight:800;
+      color:#c7d3ea;
+      letter-spacing:.1px;
+      white-space:nowrap;
+    }
+
+    .divider{
+      margin:0 12px;
+      height:1px;
+      background:rgba(255,255,255,.1);
+    }
+
+    .shop-foot{
+      display:grid;
+      grid-template-columns:2.35fr 1.45fr 1.18fr 104px;
+      min-height:46px;
+    }
+
+    .metric{
+      padding:5px 8px 3px;
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      min-width:0;
+    }
+
+    .metric:not(:last-child):after{
+      content:"";
+      position:absolute;
+      right:0;
+      top:6px;
+      bottom:6px;
+      width:1px;
+      background:rgba(255,255,255,.15);
+    }
+
+    .metric .s{
+      font-size:10px;
+      font-weight:800;
+      color:#b67cff;
+      margin-bottom:3px;
+      line-height:1;
+      white-space:nowrap;
+    }
+
+    .metric .s.blue{color:#a8b7d7}
+
+    .metric .b{
+      font-size:13px;
+      line-height:1;
+      font-weight:900;
+      color:#f1f6ff;
+      white-space:nowrap;
+    }
+
+    .metric .g{
+      margin-top:3px;
+      font-size:10px;
+      line-height:1;
+      font-weight:900;
+      color:var(--green);
+      white-space:nowrap;
+    }
+
+    .metric .d{
+      font-size:13px;
+      line-height:1;
+      font-weight:900;
+      color:#edf3ff;
+      white-space:nowrap;
+    }
+
+    .metric .k{
+      margin-top:3px;
+      font-size:11px;
+      line-height:1;
+      font-weight:800;
+      color:#90a3c8;
+      white-space:nowrap;
+    }
+
+
+    /* 左端のレート列だけ中央寄せ */
+    .shop-foot .metric:first-child{
+      align-items:center;
+      text-align:center;
+      padding-left:8px;
+      padding-right:8px;
+    }
+
+    .actions{
+      padding:5px 6px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:5px;
+    }
+
+    .go,.map{
+      height:23px;
+      border-radius:10px;
+      font-size:10px;
+      font-weight:900;
+    }
+
+    .go{
+      border:none;
+      color:#fff;
+      background:linear-gradient(180deg,#6674ff,#4c59df);
+    }
+
+    .map{
+      border:2px solid rgba(199,214,240,.74);
+      background:transparent;
+      color:#fff;
+    }
+
+    .bottom{
+      position:sticky;
+      bottom:0;
+      margin-top:8px;
+      padding:8px 10px 8px;
+      background:linear-gradient(180deg, rgba(4,18,36,.72), rgba(4,18,36,.98));
+      border-top:1px solid rgba(255,255,255,.06);
+      backdrop-filter:blur(12px);
+    }
+
+    .nav{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:4px;
+      text-align:center;
+      color:#8ea0c4;
+      font-size:10px;
+      font-weight:800;
+      line-height:1.2;
+    }
+
+    .nav .active{color:#5d73ff}
+
+    .home{
+      width:134px;
+      height:5px;
+      border-radius:999px;
+      background:#fff;
+      opacity:.95;
+      margin:7px auto 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="screen">
+    <div class="phone">
+      <div class="status">
+        <div>9:41</div>
+        <div class="status-right">
+          <div class="sig"><i></i><i></i><i></i><i></i></div>
+          <div class="wifi"></div>
+          <div class="battery"></div>
+        </div>
+      </div>
+
+      <section class="card best">
+        <div class="best-title">👑 今日のベストレート</div>
+        <div class="best-main">
+          <div>
+            <div class="best-rate-row">
+              <div class="best-rate">0.2032</div>
+              <div class="best-unit">THB / JPY</div>
+            </div>
+          </div>
+          <div class="best-time">
+            <div class="label">取得時刻</div>
+            <div class="value">4/22 03:15</div>
+          </div>
+        </div>
+        <div class="best-sub">
+          <div class="r1"><span class="yen">10,000円</span>で 2,032 THB</div>
+          <div class="r2">+122 THBお得</div>
+        </div>
+        <button class="refresh" type="button"><span class="ico"></span>更新</button>
+      </section>
+
+      <section class="card controls">
+        <div class="control-grid">
+          <div>
+            <div class="label">入力金額（円）</div>
+            <div class="input-box">
+              <input value="10,000" />
+              <div class="suffix">円</div>
+            </div>
+          </div>
+          <div>
+            <div class="label" style="visibility:hidden">現在地</div>
+            <button class="loc-btn" type="button">📍 現在地を取得</button>
+            <div class="loc-row"><span>位置情報：取得済み</span><span class="check"></span></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="tabs">
+        <button class="tab active" type="button">レート順</button>
+        <button class="tab" type="button">近い順</button>
+        <button class="tab" type="button">タニヤ優先</button>
+      </div>
+
+      <div class="count">8件のレートを表示中</div>
+
+      <section class="shop featured">
+        <div class="shop-head">
+          <div class="left-rail">
+            <div class="medal">1</div>
+            <div class="rail-divider"></div>
+            <div class="logo-box logo-ts">TS</div>
+          </div>
+          <div class="shop-main">
+            <div class="title">Thaniya Spirit</div>
+            <div class="area">Thaniya</div>
+          </div>
+          <div class="rate-side">
+            <span class="top-badge">🌀 今日いちばん得</span>
+            <div class="num">0.2032</div>
+            <div class="unit">THB / JPY</div>
+          </div>
+          <div class="badges">
+            <span class="badge">👑 タニヤ本命</span>
+            <span class="badge">📌 参照値</span>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="shop-foot">
+          <div class="metric">
+            <div class="s">10,000円で</div>
+            <div class="b">2,032 THB</div>
+            <div class="g">+122 THBお得</div>
+          </div>
+          <div class="metric">
+            <div class="s blue">10,000円</div>
+            <div class="b">2,032 THB</div>
+          </div>
+          <div class="metric">
+            <div class="d">徒歩3分</div>
+            <div class="k">(0.24km)</div>
+          </div>
+          <div class="actions">
+            <button class="go" type="button">今すぐ行く</button>
+            <button class="map" type="button">地図</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="shop">
+        <div class="shop-head">
+          <div class="left-rail">
+            <div class="medal silver">2</div>
+            <div class="rail-divider"></div>
+            <div class="logo-box logo-sg">SG</div>
+          </div>
+          <div class="shop-main">
+            <div class="title">Superrich Green</div>
+            <div class="area">Sukhumvit Soi 3/1</div>
+          </div>
+          <div class="rate-side">
+            <div class="num">0.2020</div>
+            <div class="unit">THB / JPY</div>
+          </div>
+          <div class="badges">
+            <span class="badge">🗺️ 有名店</span>
+            <span class="badge"><span class="dot"></span> 緑</span>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="shop-foot">
+          <div class="metric">
+            <div class="s">10,000円で</div>
+            <div class="b">2,030 THB</div>
+            <div class="g">+110 THBお得</div>
+          </div>
+          <div class="metric">
+            <div class="s blue">10,000円</div>
+            <div class="b">2,020 THB</div>
+          </div>
+          <div class="metric">
+            <div class="d">徒歩24分</div>
+            <div class="k">(1.92km)</div>
+          </div>
+          <div class="actions">
+            <button class="go" type="button">今すぐ行く</button>
+            <button class="map" type="button">地図</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="bottom">
+        <div class="nav">
+          <div class="active">📈<br>レート</div>
+          <div>🗺️<br>マップ</div>
+          <div>☆<br>お気に入り</div>
+          <div>🕘<br>履歴</div>
+          <div>⚙️<br>設定</div>
+        </div>
+        <div class="home"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
