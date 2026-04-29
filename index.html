@@ -4875,17 +4875,33 @@ body{
     }
   }
 </style>
+
 <script>
   (function () {
     function ready() {
       document.documentElement.classList.add("app-ready");
     }
-    window.addEventListener("load", function () {
-      setTimeout(ready, 700);
-    });
-    setTimeout(ready, 4000);
+
+    var waited = 0;
+    var timer = setInterval(function () {
+      waited += 100;
+
+      // app.js 側でAPI取得完了したら表示
+      if (window.__ratesLoaded === true) {
+        clearInterval(timer);
+        ready();
+      }
+
+      // 15秒経ってもAPIが返らない場合だけ表示
+      // ただし通常はここまで行かない
+      if (waited >= 15000) {
+        clearInterval(timer);
+        ready();
+      }
+    }, 100);
   })();
 </script>
+
 
 </head>
 <body>
