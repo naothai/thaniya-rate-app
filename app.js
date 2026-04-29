@@ -46,7 +46,7 @@ const shops = [
     name: "Thaniya Spirit",
     mapUrl: "https://maps.app.goo.gl/x7Y3j9aCiytY2V2n6",
     area: "Thaniya",
-    rate: 0.2032,
+    rate: null,
     lat: 13.72889,
     lng: 100.53354,
     tags: ["👑 タニヤ本命", "📌 参照値"],
