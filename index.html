@@ -4823,13 +4823,14 @@ body{
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- release boot fix: 古い静止HTMLを一瞬見せない -->
-<style id="release-boot-fix">
-  html:not(.app-ready)::before {
+
+<!-- final release guard: 2032/古い初期画面を絶対に見せない -->
+<style id="final-release-guard">
+  html:not(.final-ready)::before {
     content: "レート取得中...";
     position: fixed;
     inset: 0;
-    z-index: 999999;
+    z-index: 2147483647;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -4839,69 +4840,51 @@ body{
     font-weight: 800;
     letter-spacing: .04em;
   }
-  html:not(.app-ready) body {
+
+  html:not(.final-ready) body {
     opacity: 0 !important;
+    pointer-events: none !important;
   }
 
   html, body {
     max-width: 100%;
     overflow-x: hidden;
   }
-
-  @media (max-width: 480px) {
-    body {
-      width: 100% !important;
-      max-width: 100vw !important;
-      margin: 0 !important;
-      overflow-x: hidden !important;
-    }
-
-    .app,
-    .app-shell,
-    .phone,
-    .phone-frame,
-    .mobile-frame,
-    .screen,
-    .container,
-    .main,
-    .page,
-    #app {
-      max-width: 100vw !important;
-      width: 100% !important;
-      min-width: 0 !important;
-      margin-left: auto !important;
-      margin-right: auto !important;
-      box-sizing: border-box !important;
-    }
-  }
 </style>
 
 <script>
-  (function () {
-    function ready() {
-      document.documentElement.classList.add("app-ready");
-    }
+(function(){
+  function hasOldRate(){
+    var text = document.body ? document.body.innerText : "";
+    return text.includes("0.2032") || text.includes("2,032 THB") || text.includes("+122 THB");
+  }
+
+  function showWhenClean(){
+    if (!document.body) return setTimeout(showWhenClean, 100);
 
     var waited = 0;
-    var timer = setInterval(function () {
+    var timer = setInterval(function(){
       waited += 100;
 
-      // app.js 側でAPI取得完了したら表示
-      if (window.__ratesLoaded === true) {
+      var loaded = window.__ratesLoaded === true;
+      var old = hasOldRate();
+
+      if (loaded && !old) {
         clearInterval(timer);
-        ready();
+        document.documentElement.classList.add("final-ready");
       }
 
-      // 15秒経ってもAPIが返らない場合だけ表示
-      // ただし通常はここまで行かない
-      if (waited >= 15000) {
+      // 20秒以上かかった場合も、古い2032が残っていたら出さない
+      if (waited >= 20000 && !old) {
         clearInterval(timer);
-        ready();
+        document.documentElement.classList.add("final-ready");
       }
     }, 100);
-  })();
-</script>
+  }
 
+  showWhenClean();
+})();
+</script>
 
 </head>
 <body>
@@ -4913,7 +4896,7 @@ body{
         <div class="best-main">
           <div>
             <div class="best-rate-row">
-              <div class="best-rate">0.2032</div>
+              <div class="best-rate">取得中</div>
               <div class="best-unit">THB / JPY</div>
             </div>
           </div>
@@ -4924,7 +4907,7 @@ body{
         </div>
         <div class="best-sub">
           <div class="r1"><span class="yen">10,000円</span>で 2,032 THB</div>
-          <div class="r2">+122 THBお得</div>
+          <div class="r2">取得中</div>
         </div>
         <button class="refresh" type="button"><span class="ico"></span>更新</button>
       </section>
@@ -4975,7 +4958,7 @@ body{
           </div>
           <div class="rate-side">
             <span class="top-badge">🌀 今日いちばん得</span>
-            <div class="num">0.2032</div>
+            <div class="num">取得中</div>
             <div class="unit">THB / JPY</div>
           </div>
           <div class="badges">
@@ -4987,12 +4970,12 @@ body{
         <div class="shop-foot">
           <div class="metric">
             <div class="s">10,000円で</div>
-            <div class="b">2,032 THB</div>
-            <div class="g">+122 THBお得</div>
+            <div class="b">取得中</div>
+            <div class="g">取得中</div>
           </div>
           <div class="metric">
             <div class="s blue">10,000円</div>
-            <div class="b">2,032 THB</div>
+            <div class="b">取得中</div>
           </div>
           <div class="metric">
             <div class="d">徒歩3分</div>
