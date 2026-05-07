@@ -4824,138 +4824,9 @@ body{
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 
-<!-- final release guard: 2032/古い初期画面を絶対に見せない -->
-<style id="final-release-guard">
-  html:not(.final-ready)::before {
-    content: "レート取得中...";
-    position: fixed;
-    inset: 0;
-    z-index: 2147483647;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #061426;
-    color: #eaf2ff;
-    font-size: 18px;
-    font-weight: 800;
-    letter-spacing: .04em;
-  }
 
-  html:not(.final-ready) body {
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-
-  html, body {
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-</style>
-
-<script>
-(function(){
-  function hasOldRate(){
-    var text = document.body ? document.body.innerText : "";
-    return text.includes("0.2032") || text.includes("2,032 THB") || text.includes("+122 THB");
-  }
-
-  function showWhenClean(){
-    if (!document.body) return setTimeout(showWhenClean, 100);
-
-    var waited = 0;
-    var timer = setInterval(function(){
-      waited += 100;
-
-      var loaded = window.__ratesLoaded === true;
-      var old = hasOldRate();
-
-      if (loaded && !old) {
-        clearInterval(timer);
-        document.documentElement.classList.add("final-ready");
-      }
-
-      // 20秒以上かかった場合も、古い2032が残っていたら出さない
-      if (waited >= 20000 && !old) {
-        clearInterval(timer);
-        document.documentElement.classList.add("final-ready");
-      }
-    }, 100);
-  }
-
-  showWhenClean();
-})();
-</script>
-
-
-<!-- mobile fit final: スマホ横はみ出し修正 -->
-<style id="mobile-fit-final">
-  html, body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden !important;
-  }
-
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-
-  @media (max-width: 520px) {
-    body {
-      margin: 0 !important;
-      padding: 0 !important;
-      overflow-x: hidden !important;
-    }
-
-    .app,
-    .app-shell,
-    .phone,
-    .phone-frame,
-    .screen,
-    .main,
-    .page,
-    .container,
-    #app {
-      width: 100vw !important;
-      max-width: 100vw !important;
-      min-width: 0 !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-      overflow-x: hidden !important;
-    }
-
-    .rate-card,
-    .summary-card,
-    .shop-card,
-    .store-card,
-    .card,
-    .panel {
-      max-width: calc(100vw - 24px) !important;
-      margin-left: 12px !important;
-      margin-right: 12px !important;
-      overflow: hidden !important;
-    }
-
-    .tabs,
-    .sort-tabs,
-    .filter-tabs {
-      max-width: calc(100vw - 24px) !important;
-      margin-left: 12px !important;
-      margin-right: 12px !important;
-      overflow: hidden !important;
-    }
-
-    button,
-    .btn,
-    .map-button,
-    .go-button {
-      max-width: 100% !important;
-    }
-  }
-</style>
-
-
-<!-- mobile scale fix: スマホ表示を少し縮小して完全に収める -->
-<style id="mobile-scale-fix">
+<!-- FINAL CLEAN MOBILE CSS -->
+<style id="final-clean-mobile-css">
   @media (max-width: 520px) {
     html, body {
       width: 100% !important;
@@ -4964,208 +4835,126 @@ body{
       background: #061426 !important;
     }
 
-    body {
-      transform: scale(0.94);
-      transform-origin: top center;
-      width: 106.4% !important;
-      margin-left: -3.2% !important;
-      min-height: 106.4vh !important;
-    }
-
-    .bottom-nav,
-    .tabbar,
-    .nav,
-    .footer-nav {
-      max-width: 100vw !important;
-      left: 0 !important;
-      right: 0 !important;
-    }
-  }
-</style>
-
-
-<!-- shop card fit: 店舗カード右側の切れ修正 -->
-<style id="shop-card-fit-final">
-  @media (max-width: 520px) {
-    .shop-card,
-    .store-card {
-      width: calc(100vw - 28px) !important;
-      max-width: calc(100vw - 28px) !important;
-      margin-left: 14px !important;
-      margin-right: 14px !important;
-      overflow: hidden !important;
-    }
-
-    .shop-card * ,
-    .store-card * {
-      min-width: 0 !important;
-    }
-
-    .shop-card .go-button,
-    .shop-card .map-button,
-    .store-card .go-button,
-    .store-card .map-button,
-    .shop-card button,
-    .store-card button {
-      max-width: 138px !important;
-      min-width: 0 !important;
-      white-space: nowrap !important;
-      font-size: 14px !important;
-      padding-left: 10px !important;
-      padding-right: 10px !important;
-    }
-
-    .shop-card .rate,
-    .store-card .rate,
-    .shop-card .shop-rate,
-    .store-card .shop-rate {
-      font-size: clamp(24px, 7vw, 34px) !important;
-      white-space: nowrap !important;
-    }
-  }
-</style>
-
-
-<!-- mobile final position fix: body scale解除＋下メニュー固定＋カード内詰め -->
-<style id="mobile-final-position-fix">
-  @media (max-width: 520px) {
-    html, body {
-      width: 100% !important;
-      max-width: 100% !important;
-      overflow-x: hidden !important;
-      transform: none !important;
-      margin: 0 !important;
-      background: #061426 !important;
-    }
-
-    body {
-      width: 100% !important;
-      margin-left: 0 !important;
-      min-height: 100vh !important;
-      transform: none !important;
-      padding-bottom: 92px !important;
-    }
-
-    .app,
-    .app-shell,
-    .screen,
-    .main,
-    .page,
-    .container,
-    #app {
-      width: 100vw !important;
-      max-width: 100vw !important;
-      overflow-x: hidden !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-    }
-
-    .shop-card,
-    .store-card,
-    .card {
-      width: calc(100vw - 32px) !important;
-      max-width: calc(100vw - 32px) !important;
-      margin-left: 16px !important;
-      margin-right: 16px !important;
-      overflow: hidden !important;
-    }
-
-    .shop-card *,
-    .store-card *,
-    .card * {
-      min-width: 0 !important;
+    *, *::before, *::after {
       box-sizing: border-box !important;
     }
 
-    .shop-card button,
-    .store-card button,
-    .go-button,
-    .map-button {
-      max-width: 118px !important;
-      font-size: 13px !important;
-      padding-left: 8px !important;
-      padding-right: 8px !important;
+    .phone,
+    .app,
+    .screen,
+    #app {
+      width: 100vw !important;
+      max-width: 100vw !important;
+      overflow-x: hidden !important;
+      margin: 0 !important;
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+      padding-bottom: 96px !important;
+    }
+
+    .card,
+    .shop {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      overflow: hidden !important;
+    }
+
+    .input-box input {
+      width: 100% !important;
+      min-width: 0 !important;
+      font-size: 28px !important;
+    }
+
+    .shop-head {
+      display: grid !important;
+      grid-template-columns: 74px minmax(0, 1fr) 112px !important;
+      column-gap: 10px !important;
+      align-items: center !important;
+    }
+
+    .shop-main {
+      min-width: 0 !important;
+      overflow: hidden !important;
+    }
+
+    .shop-main .title,
+    .title {
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      max-width: 100% !important;
+    }
+
+    .rate-side {
+      width: 112px !important;
+      min-width: 112px !important;
+      text-align: right !important;
+      overflow: hidden !important;
+    }
+
+    .rate-side .num {
+      font-size: 27px !important;
+      line-height: 1.05 !important;
       white-space: nowrap !important;
     }
 
-    .bottom-nav,
-    .tabbar,
-    .footer-nav,
-    .nav-bottom {
+    .rate-side .unit {
+      font-size: 12px !important;
+      white-space: nowrap !important;
+    }
+
+    .shop-foot {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr) minmax(0, .85fr) 104px !important;
+      column-gap: 8px !important;
+      align-items: center !important;
+    }
+
+    .shop-foot > * {
+      min-width: 0 !important;
+      overflow: hidden !important;
+    }
+
+    .shop-foot .b,
+    .shop-foot .d,
+    .shop-foot .k {
+      white-space: nowrap !important;
+    }
+
+    .actions {
+      width: 104px !important;
+      min-width: 104px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 6px !important;
+    }
+
+    .go,
+    .map {
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      font-size: 13px !important;
+      padding-left: 6px !important;
+      padding-right: 6px !important;
+      white-space: nowrap !important;
+    }
+
+    .bottom,
+    #app-bottom-nav {
       position: fixed !important;
       left: 0 !important;
       right: 0 !important;
       bottom: 0 !important;
       width: 100vw !important;
       max-width: 100vw !important;
-      transform: none !important;
       margin: 0 !important;
-      z-index: 99999 !important;
+      transform: none !important;
+      z-index: 9999 !important;
       padding-bottom: env(safe-area-inset-bottom) !important;
     }
-  }
-</style>
-
-
-<!-- card inner scale fix: 店舗カード内だけ縮小して右切れ防止 -->
-<style id="card-inner-scale-fix">
-  @media (max-width: 520px) {
-    .shop-card,
-    .store-card {
-      width: calc(100vw - 24px) !important;
-      max-width: calc(100vw - 24px) !important;
-      margin-left: 12px !important;
-      margin-right: 12px !important;
-      overflow: hidden !important;
-    }
-
-    .shop-card > *,
-    .store-card > * {
-      transform: scale(0.92) !important;
-      transform-origin: top left !important;
-      width: 108.7% !important;
-    }
-
-    .bottom-nav,
-    .tabbar,
-    .footer-nav,
-    .nav-bottom {
-      transform: none !important;
-      width: 100vw !important;
-      max-width: 100vw !important;
-      left: 0 !important;
-      right: 0 !important;
-      bottom: 0 !important;
-    }
-  }
-</style>
-
-
-
-<!-- FINAL SAFE FIX: 崩さず右はみ出しだけ止める -->
-<style id="final-safe-fix">
-  @media (max-width: 520px) {
-
-    .actions {
-      min-width: 80px !important;
-    }
-
-    .go,
-    .map {
-      font-size: 11px !important;
-      padding: 5px 6px !important;
-      white-space: nowrap !important;
-    }
-
-    .rate-side {
-      min-width: 65px !important;
-      font-size: 12px !important;
-    }
-
-    .shop-foot {
-      gap: 4px !important;
-    }
-
   }
 </style>
 
