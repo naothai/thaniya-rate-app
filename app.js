@@ -395,29 +395,13 @@ function renderAll(){
 
 function initInput(){
   const input = document.querySelector(".input-box input");
-
-  let display = document.querySelector(".yen-display");
-  if(!display){
-    display = document.createElement("div");
-    display.className = "yen-display";
-    input.insertAdjacentElement("afterend", display);
-  }
-
-  function syncYenDisplay(){
-    display.textContent = input.value;
-    const digits = input.value.replace(/[^\d]/g, "").length;
-    display.classList.toggle("is-long", digits >= 7);
-    display.classList.toggle("is-mid", digits === 6);
-  }
-
   input.value = formatNumber(amountJPY);
-  syncYenDisplay();
 
   input.addEventListener("input", () => {
     const raw = input.value.replace(/[^\d]/g, "");
     amountJPY = Number(raw || 0);
     input.value = raw ? formatNumber(amountJPY) : "";
-    syncYenDisplay();
+    input.setSelectionRange(input.value.length, input.value.length);
     renderAll();
   });
 }
