@@ -5169,6 +5169,46 @@ body{
   }
 </style>
 
+
+<!-- final minimal mobile fix -->
+<style id="final-minimal-mobile-fix">
+@media (max-width: 520px) {
+  .input-box {
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .input-box input {
+    min-width: 0 !important;
+    width: 100% !important;
+    font-size: 26px !important;
+    letter-spacing: -0.5px !important;
+  }
+
+  .suffix {
+    margin-left: 4px !important;
+    flex: 0 0 auto !important;
+  }
+
+  .phone,
+  #app {
+    padding-bottom: 130px !important;
+  }
+
+  .bottom {
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 9999 !important;
+    margin-top: 12px !important;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .shop:last-of-type {
+    margin-bottom: 120px !important;
+  }
+}
+</style>
+
 </head>
 <body>
   <div class="screen">
