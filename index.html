@@ -1011,8 +1011,9 @@ html, body{
 }
 
 .input-box input{
-  width:auto !important;
-  flex:0 1 auto !important;
+  width:140px !important;
+  flex:none !important;
+  display:block !important;
 
   background:transparent !important;
   border:0 !important;
@@ -4983,4 +4984,17 @@ body{
 
 
 
+
+
+
+/* ===== SAFARI INPUT WIDTH FIX ===== */
+.input-box{
+  overflow:hidden !important;
+}
+
+.input-box input{
+  width:140px !important;
+  flex:none !important;
+  display:block !important;
+}
 
