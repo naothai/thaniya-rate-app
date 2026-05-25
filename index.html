@@ -992,13 +992,8 @@ html, body{
 }
 
 
-/* ===== FINAL INPUT / RESULT STABLE OVERRIDE ===== */
-.control-grid{
-  display:grid !important;
-  grid-template-columns:1fr 1fr !important;
-  column-gap:12px !important;
-  row-gap:10px !important;
-}
+
+/* ===== CLEAN CURRENCY LAYOUT ===== */
 
 .input-box,
 .thb-box{
@@ -1008,74 +1003,77 @@ html, body{
   border:1px solid rgba(255,255,255,.08) !important;
   background:linear-gradient(180deg, rgba(12,28,51,.98), rgba(8,21,39,.98)) !important;
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.02) !important;
-}
 
-.input-box{
-  position:relative !important;
   display:flex !important;
   align-items:center !important;
+  justify-content:center !important;
+  gap:12px !important;
 }
 
 .input-box input{
-  width:100% !important;
-  height:100% !important;
+  width:auto !important;
+  flex:0 1 auto !important;
+
   background:transparent !important;
   border:0 !important;
   outline:0 !important;
   box-shadow:none !important;
-  padding:0 48px 0 18px !important;
+
+  padding:0 !important;
+  margin:0 !important;
+
   color:#f2f6ff !important;
+
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif !important;
   font-size:21px !important;
   font-weight:800 !important;
   line-height:1 !important;
   letter-spacing:-0.4px !important;
+
+  text-align:right !important;
+
   font-variant-numeric:tabular-nums !important;
   font-feature-settings:"tnum" !important;
 }
 
 .input-box input:focus{
-  background:transparent !important;
   border:0 !important;
   outline:0 !important;
   box-shadow:none !important;
 }
 
-.input-box .suffix{
-  position:absolute !important;
-  right:18px !important;
-  top:50% !important;
-  transform:translateY(-50%) !important;
-  color:#d4def1 !important;
-  font-size:21px !important;
-  font-weight:800 !important;
-  line-height:1 !important;
-}
-
-.thb-box{
+.input-box .suffix,
+.result-unit,
+.result-value{
   display:flex !important;
   align-items:center !important;
-  justify-content:space-between !important;
-  padding:0 18px !important;
-}
 
-.result-value,
-.result-unit{
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif !important;
   font-weight:800 !important;
   line-height:1 !important;
   letter-spacing:-0.4px !important;
+
   font-variant-numeric:tabular-nums !important;
   font-feature-settings:"tnum" !important;
-  color:#f2f6ff !important;
 }
 
-.result-value{
+.result-value,
+.input-box .suffix{
   font-size:21px !important;
 }
 
 .result-unit{
-  font-size:18px !important;
+  font-size:21px !important;
+  color:#d4def1 !important;
+}
+
+.result-value{
+  color:#f2f6ff !important;
+}
+
+.input-box .suffix{
+  position:static !important;
+  transform:none !important;
   color:#d4def1 !important;
 }
 
@@ -2971,13 +2969,8 @@ html, body{
 }
 
 
-/* ===== FINAL INPUT / RESULT STABLE OVERRIDE ===== */
-.control-grid{
-  display:grid !important;
-  grid-template-columns:1fr 1fr !important;
-  column-gap:12px !important;
-  row-gap:10px !important;
-}
+
+/* ===== CLEAN CURRENCY LAYOUT ===== */
 
 .input-box,
 .thb-box{
@@ -2987,74 +2980,77 @@ html, body{
   border:1px solid rgba(255,255,255,.08) !important;
   background:linear-gradient(180deg, rgba(12,28,51,.98), rgba(8,21,39,.98)) !important;
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.02) !important;
-}
 
-.input-box{
-  position:relative !important;
   display:flex !important;
   align-items:center !important;
+  justify-content:center !important;
+  gap:12px !important;
 }
 
 .input-box input{
-  width:100% !important;
-  height:100% !important;
+  width:auto !important;
+  flex:0 1 auto !important;
+
   background:transparent !important;
   border:0 !important;
   outline:0 !important;
   box-shadow:none !important;
-  padding:0 48px 0 18px !important;
+
+  padding:0 !important;
+  margin:0 !important;
+
   color:#f2f6ff !important;
+
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif !important;
   font-size:21px !important;
   font-weight:800 !important;
   line-height:1 !important;
   letter-spacing:-0.4px !important;
+
+  text-align:right !important;
+
   font-variant-numeric:tabular-nums !important;
   font-feature-settings:"tnum" !important;
 }
 
 .input-box input:focus{
-  background:transparent !important;
   border:0 !important;
   outline:0 !important;
   box-shadow:none !important;
 }
 
-.input-box .suffix{
-  position:absolute !important;
-  right:18px !important;
-  top:50% !important;
-  transform:translateY(-50%) !important;
-  color:#d4def1 !important;
-  font-size:21px !important;
-  font-weight:800 !important;
-  line-height:1 !important;
-}
-
-.thb-box{
+.input-box .suffix,
+.result-unit,
+.result-value{
   display:flex !important;
   align-items:center !important;
-  justify-content:space-between !important;
-  padding:0 18px !important;
-}
 
-.result-value,
-.result-unit{
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif !important;
   font-weight:800 !important;
   line-height:1 !important;
   letter-spacing:-0.4px !important;
+
   font-variant-numeric:tabular-nums !important;
   font-feature-settings:"tnum" !important;
-  color:#f2f6ff !important;
 }
 
-.result-value{
+.result-value,
+.input-box .suffix{
   font-size:21px !important;
 }
 
 .result-unit{
-  font-size:18px !important;
+  font-size:21px !important;
+  color:#d4def1 !important;
+}
+
+.result-value{
+  color:#f2f6ff !important;
+}
+
+.input-box .suffix{
+  position:static !important;
+  transform:none !important;
   color:#d4def1 !important;
 }
 
