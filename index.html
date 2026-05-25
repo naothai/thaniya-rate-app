@@ -5410,3 +5410,30 @@ body{
 
 </body>
 </html>
+<!-- ULTIMATE MOBILE OVERRIDE -->
+<style id="ultimate-mobile-override">
+@media (max-width:520px){
+  .phone,
+  .screen,
+  #app{
+    padding-bottom:150px !important;
+  }
+
+  .input-box input{
+    font-size:22px !important;
+    letter-spacing:-1.5px !important;
+  }
+
+  .bottom{
+    position:sticky !important;
+    bottom:0 !important;
+    z-index:99999 !important;
+    margin-top:12px !important;
+    padding-bottom:calc(10px + env(safe-area-inset-bottom)) !important;
+  }
+
+  #app-bottom-nav{
+    pointer-events:auto !important;
+  }
+}
+</style>
