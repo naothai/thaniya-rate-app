@@ -5773,3 +5773,48 @@ body{
   }
 }
 </style>
+
+<!-- YEN SEPARATED LAYOUT FINAL -->
+<style id="yen-separated-layout-final">
+@media (max-width:520px){
+  .card.controls .input-box{
+    display:grid !important;
+    grid-template-columns:minmax(0, 1fr) 28px !important;
+    column-gap:6px !important;
+    align-items:center !important;
+    justify-items:stretch !important;
+    overflow:hidden !important;
+  }
+
+  .card.controls .input-box input{
+    grid-column:1 !important;
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    font-size:18px !important;
+    line-height:1 !important;
+    letter-spacing:-1px !important;
+    text-align:right !important;
+    padding:0 !important;
+    margin:0 !important;
+    overflow:hidden !important;
+    white-space:nowrap !important;
+    text-overflow:clip !important;
+  }
+
+  .card.controls .input-box .suffix{
+    grid-column:2 !important;
+    width:28px !important;
+    min-width:28px !important;
+    max-width:28px !important;
+    margin:0 !important;
+    padding:0 !important;
+    font-size:18px !important;
+    line-height:1 !important;
+    font-weight:900 !important;
+    text-align:left !important;
+    transform:none !important;
+    display:block !important;
+  }
+}
+</style>
