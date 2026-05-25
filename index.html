@@ -5210,29 +5210,6 @@ body{
 </style>
 
 
-<!-- input display fix -->
-<style id="input-display-fix">
-  .input-display{
-    flex:1 1 auto;
-    min-width:0;
-    color:#f4f7ff;
-    font-size:28px;
-    font-weight:900;
-    letter-spacing:-0.5px;
-    line-height:1;
-    white-space:nowrap;
-    overflow:visible;
-    text-align:center;
-  }
-
-  @media (max-width:520px){
-    .input-display{
-      font-size:26px !important;
-      letter-spacing:-1px !important;
-    }
-  }
-</style>
-
 </head>
 <body>
   <div class="screen">
@@ -5264,7 +5241,7 @@ body{
           <div class="control-col">
             <div class="label">入力金額（円）</div>
             <div class="input-box">
-              <div class="input-display">10,000</div>
+              <input value="10,000" inputmode="numeric" />
               <div class="suffix">円</div>
             </div>
           </div>
@@ -5432,6 +5409,37 @@ body{
 }
 </style>
 
+
+<!-- REAL INPUT FIX -->
+<style id="real-input-fix">
+@media (max-width:520px){
+  .card.controls .input-box{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    overflow:hidden !important;
+  }
+
+  .card.controls .input-box input{
+    flex:1 1 auto !important;
+    min-width:0 !important;
+    width:0 !important;
+    max-width:100% !important;
+    font-size:24px !important;
+    letter-spacing:-1.2px !important;
+    text-align:center !important;
+    padding-left:4px !important;
+    padding-right:2px !important;
+  }
+
+  .card.controls .input-box .suffix{
+    flex:0 0 auto !important;
+    font-size:17px !important;
+    margin-left:2px !important;
+  }
+}
+</style>
+
 </body>
 </html>
 <!-- ULTIMATE MOBILE OVERRIDE -->
@@ -5462,36 +5470,4 @@ body{
 }
 </style>
 
-<!-- INPUT DISPLAY TUNING -->
-<style id="input-display-tuning">
-@media (max-width:520px){
-  .input-display{
-    font-size:24px !important;
-    letter-spacing:-1px !important;
-    text-align:center !important;
-    transform:translateX(-4px);
-  }
 
-  .suffix{
-    font-size:17px !important;
-    margin-left:2px !important;
-  }
-}
-</style>
-
-<!-- INPUT DISPLAY TUNING -->
-<style id="input-display-tuning">
-@media (max-width:520px){
-  .input-display{
-    font-size:24px !important;
-    letter-spacing:-1px !important;
-    text-align:center !important;
-    transform:translateX(-4px);
-  }
-
-  .suffix{
-    font-size:17px !important;
-    margin-left:2px !important;
-  }
-}
-</style>
