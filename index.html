@@ -4878,6 +4878,61 @@ body{
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 
+
+<style id="yen-display-grid-final">
+.input-box{
+  position:relative !important;
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) auto !important;
+  column-gap:4px !important;
+  align-items:center !important;
+}
+
+.input-box .yen-display{
+  grid-column:1 !important;
+  grid-row:1 !important;
+  min-width:0 !important;
+  width:100% !important;
+  overflow:hidden !important;
+  white-space:nowrap !important;
+  text-align:right !important;
+  color:#f2f6ff !important;
+  font-size:13px !important;
+  font-weight:800 !important;
+  line-height:1 !important;
+  letter-spacing:-1.4px !important;
+  font-variant-numeric:tabular-nums !important;
+  font-feature-settings:"tnum" !important;
+  pointer-events:none !important;
+}
+
+.input-box .yen-display.is-million{
+  font-size:11px !important;
+  letter-spacing:-1.8px !important;
+}
+
+.input-box input{
+  grid-column:1 !important;
+  grid-row:1 !important;
+  width:100% !important;
+  height:100% !important;
+  opacity:0 !important;
+  color:transparent !important;
+  -webkit-text-fill-color:transparent !important;
+  caret-color:transparent !important;
+  z-index:5 !important;
+}
+
+.input-box .suffix{
+  grid-column:2 !important;
+  grid-row:1 !important;
+  position:static !important;
+  align-self:center !important;
+  font-size:14px !important;
+  margin-left:4px !important;
+}
+</style>
+
 </head>
 <body>
   <div class="screen">

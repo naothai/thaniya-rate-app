@@ -395,15 +395,35 @@ function renderAll(){
 
 function initInput(){
   const input = document.querySelector(".input-box input");
+  const box = document.querySelector(".input-box");
+  if(!input || !box) return;
+
+  let display = box.querySelector(".yen-display");
+  if(!display){
+    display = document.createElement("div");
+    display.className = "yen-display";
+    box.insertBefore(display, input);
+  }
+
+  function syncYenDisplay(){
+    display.textContent = input.value || "";
+    const digits = (input.value || "").replace(/[^\d]/g, "").length;
+    display.classList.toggle("is-million", digits >= 7);
+  }
+
   input.value = formatNumber(amountJPY);
+  syncYenDisplay();
 
   input.addEventListener("input", () => {
     const raw = input.value.replace(/[^\d]/g, "");
     amountJPY = Number(raw || 0);
     input.value = raw ? formatNumber(amountJPY) : "";
-    input.setSelectionRange(input.value.length, input.value.length);
+    syncYenDisplay();
     renderAll();
   });
+
+  input.addEventListener("change", syncYenDisplay);
+  input.addEventListener("blur", syncYenDisplay);
 }
 
 function initTabs(){
