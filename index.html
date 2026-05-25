@@ -4988,3 +4988,33 @@ body{
 
 
 
+
+<style id="currency-inline-fix">
+@media (max-width:520px){
+
+  .input-box,
+  .thb-box{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:10px !important;
+  }
+
+  .input-box input,
+  .result-value{
+    width:auto !important;
+    flex:none !important;
+    text-align:right !important;
+  }
+
+  .suffix,
+  .result-unit{
+    position:static !important;
+    top:auto !important;
+    transform:none !important;
+    margin:0 !important;
+    line-height:1 !important;
+    flex:none !important;
+  }
+}
+</style>
