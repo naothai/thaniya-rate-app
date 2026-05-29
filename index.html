@@ -3128,10 +3128,12 @@ html, body{
 }
 
 .thb-box{
-  display:flex !important;
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) 38px !important;
   align-items:center !important;
-  justify-content:space-between !important;
-  padding:0 18px !important;
+  column-gap:2px !important;
+  padding:0 8px !important;
+  overflow:hidden !important;
 }
 
 .result-value,
@@ -3146,12 +3148,20 @@ html, body{
 }
 
 .result-value{
-  font-size:21px !important;
+  font-size:20px !important;
+  min-width:0 !important;
+  overflow:hidden !important;
+  white-space:nowrap !important;
+  text-overflow:clip !important;
+  text-align:right !important;
+  letter-spacing:-1.8px !important;
 }
 
 .result-unit{
-  font-size:18px !important;
+  font-size:14px !important;
   color:#d4def1 !important;
+  white-space:nowrap !important;
+  text-align:right !important;
 }
 
 
