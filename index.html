@@ -1129,10 +1129,12 @@ html, body{
 }
 
 .thb-box{
-  display:flex !important;
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) auto !important;
   align-items:center !important;
-  justify-content:space-between !important;
+  column-gap:8px !important;
   padding:0 18px !important;
+  overflow:hidden !important;
 }
 
 .result-value,
@@ -1148,11 +1150,18 @@ html, body{
 
 .result-value{
   font-size:21px !important;
+  min-width:0 !important;
+  overflow:hidden !important;
+  white-space:nowrap !important;
+  text-overflow:clip !important;
+  text-align:right !important;
 }
 
 .result-unit{
   font-size:18px !important;
   color:#d4def1 !important;
+  white-space:nowrap !important;
+  flex:0 0 auto !important;
 }
 
 
