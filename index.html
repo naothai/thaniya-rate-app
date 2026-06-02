@@ -485,7 +485,18 @@
       color:#f2f6ff;
       white-space:nowrap;
       overflow:hidden;
-      
+      text-overflow:ellipsis;
+      cursor:pointer;
+    }
+
+    .title.expanded{
+      overflow:visible;
+      text-overflow:clip;
+      position:relative;
+      z-index:20;
+      background:linear-gradient(180deg, rgba(9,25,46,.985), rgba(7,20,37,.985));
+      border-radius:6px;
+      padding-right:6px;
     }
 
     .area{
