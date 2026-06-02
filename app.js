@@ -458,7 +458,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupLocation();
   setupRefreshButton();
   await loadRealRates();
-  initInput();
+  initInput();\ninitTitleTapExpand();
   initTabs();
   initLocation();
   renderAll();
@@ -3101,3 +3101,12 @@ if(typeof renderHistoryPanel7Days === "function" && !window.__restore7DaysRankin
 
 
 
+\n
+function initTitleTapExpand(){
+  document.addEventListener("click", function(e){
+    const title = e.target.closest(".title");
+    if(!title) return;
+    title.classList.toggle("expanded");
+  });
+}
+\n
